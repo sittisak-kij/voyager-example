@@ -30,7 +30,6 @@ class ChangeUserNameScreen : Screen {
 
 @Composable
 fun ChangeUserNameContent() {
-    val navigator = LocalNavigator.current
     var text by remember { mutableStateOf(TextFieldValue("")) }
     Column(
         modifier = Modifier.fillMaxSize()
@@ -51,7 +50,7 @@ fun ChangeUserNameContent() {
         Button(modifier = Modifier.fillMaxWidth()
             .height(80.dp)
             .padding(0.dp, 16.dp), onClick = {
-            navigator?.popWithResult(text.text, "newname")
+            /* Navigate back with result */
         }) {
             Text(text = "Confirm")
         }

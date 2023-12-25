@@ -10,6 +10,10 @@ import cafe.adriel.voyager.core.screen.uniqueScreenKey
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.bottomSheet.BottomSheetNavigator
 
+/*
+ * Source: https://github.com/adrielcafe/voyager/pull/128#issuecomment-1803298948
+ */
+
 /**
  * Navigator
  */
@@ -56,7 +60,7 @@ fun <T> Navigator.getResult(screenKey: String): State<T?> {
 }
 
 /**
- * bottom sheet navigator
+ * Bottom Sheet Navigator
  */
 
 fun BottomSheetNavigator.hideWithResult(result: Any?, key: String) {

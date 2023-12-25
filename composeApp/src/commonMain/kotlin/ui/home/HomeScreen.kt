@@ -32,6 +32,7 @@ import cafe.adriel.voyager.navigator.bottomSheet.LocalBottomSheetNavigator
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import ui.home.details.HomeDetailsScreen
+import utils.listOfNews
 
 class HomeScreen : Screen {
     @Composable
@@ -41,53 +42,32 @@ class HomeScreen : Screen {
 
     @Composable
     fun HomeContent() {
-        val navigator = LocalBottomSheetNavigator.current
-        val screenModel = rememberScreenModel { HomeScreenModel() }
-
-        LaunchedEffect(Unit) {
-            screenModel.getNews()
-        }
-
-        val state by screenModel.state.collectAsState()
-        when (val result = state) {
-            is HomeScreenModel.State.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
+        LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp)) {
+            items(listOfNews) {
+                Card(
+                    modifier = Modifier.fillMaxWidth()
+                        .wrapContentHeight()
+                        .padding(0.dp, 8.dp)
+                        .clickable { /* Show details sheet */ },
+                    elevation = 4.dp
                 ) {
-                    CircularProgressIndicator()
-                }
-            }
-
-            is HomeScreenModel.State.Success -> {
-                LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp)) {
-                    items(result.news) {
-                        Card(
-                            modifier = Modifier.fillMaxWidth()
-                                .wrapContentHeight()
-                                .padding(0.dp, 8.dp)
-                                .clickable { navigator.show(HomeDetailsScreen(it)) },
-                            elevation = 4.dp
-                        ) {
-                            Row(modifier = Modifier.padding(12.dp)) {
-                                KamelImage(
-                                    modifier = Modifier.width(120.dp)
-                                        .height(67.dp),
-                                    resource = asyncPainterResource(it.image),
-                                    contentDescription = ""
-                                )
-                                Column(modifier = Modifier.padding(12.dp, 0.dp, 0.dp, 0.dp)) {
-                                    Text(
-                                        text = it.title,
-                                        fontSize = 16.sp,
-                                        fontWeight = FontWeight(Bold.weight)
-                                    )
-                                    Text(
-                                        modifier = Modifier.padding(0.dp, 12.dp, 0.dp, 0.dp),
-                                        text = it.subtitle
-                                    )
-                                }
-                            }
+                    Row(modifier = Modifier.padding(12.dp)) {
+                        KamelImage(
+                            modifier = Modifier.width(120.dp)
+                                .height(67.dp),
+                            resource = asyncPainterResource(it.image),
+                            contentDescription = ""
+                        )
+                        Column(modifier = Modifier.padding(12.dp, 0.dp, 0.dp, 0.dp)) {
+                            Text(
+                                text = it.title,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight(Bold.weight)
+                            )
+                            Text(
+                                modifier = Modifier.padding(0.dp, 12.dp, 0.dp, 0.dp),
+                                text = it.subtitle
+                            )
                         }
                     }
                 }

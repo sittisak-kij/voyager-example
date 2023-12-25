@@ -30,11 +30,8 @@ class SettingsScreen : Screen {
 
 @Composable
 fun SettingsContent() {
-    val navigator = LocalNavigator.current
     var userName by remember { mutableStateOf("Test") }
-    navigator?.getResult<String>("newname")?.value?.let {
-        userName = it
-    }
+    // Implement get result
     Column(
         modifier = Modifier.fillMaxSize()
             .padding(16.dp)
@@ -49,7 +46,7 @@ fun SettingsContent() {
             modifier = Modifier.fillMaxWidth()
                 .height(80.dp)
                 .padding(0.dp, 16.dp),
-            onClick = { navigator?.push(ChangeUserNameScreen()) }) {
+            onClick = { /* Navigate to change username screen */ }) {
             Text("Change username")
         }
     }
